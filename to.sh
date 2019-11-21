@@ -84,7 +84,7 @@ Options
         do
             if [ "$i" ]
             then
-                response+=( "$(\readlink -f -- "$TO_BOOKMARK_DIR/$i")" )
+                response+=( "$(\greadlink -f -- "$TO_BOOKMARK_DIR/$i")" )
                 if [ $? != 0 ]
                 then
                     good="bad"
@@ -119,7 +119,7 @@ Options
             fi
             if [ -d "$target" ]
             then
-                local target="$(\readlink -e -- "$target")"
+                local target="$(\greadlink -e -- "$target")"
             else
                 \printf '%q does not refer to a directory\n' "$target"
                 return 1
@@ -305,8 +305,8 @@ _to() {
         while \read -r -d '' file
         do
             subdirs+=($file)
-        done < <(\find "$(\dirname -- "$(\readlink -f -- "$TO_BOOKMARK_DIR/${word}0" || \printf '/dev/null' )")" -mindepth 1 -maxdepth 1 -type d -print0 2> /dev/null)
-        local pattern="$(\readlink -f -- "$TO_BOOKMARK_DIR/$(_to_path_head "$word")")"
+        done < <(gfind $(\dirname -- "$(\greadlink -f -- "$TO_BOOKMARK_DIR/${word}0" || \printf '/dev/null' )") -mindepth 1 -maxdepth 1 -type d -print0 2> /dev/null)
+        local pattern="$(\greadlink -f -- "$TO_BOOKMARK_DIR/$(_to_path_head "$word")")"
         local replace="$(_to_path_head "$word")"
         subdirs=( "${subdirs[@]/%//}" )
         subdirs=( "${subdirs[@]/#$pattern/$replace}" )
@@ -319,7 +319,7 @@ _to() {
             while \read -r -d '' file
             do
                 subfiles+=($file)
-            done < <(\find "$(\dirname -- "$(\readlink -f -- "$TO_BOOKMARK_DIR/${word}0" || \printf '/dev/null' )")" -mindepth 1 -maxdepth 1 -type f -print0 2> /dev/null)
+            done < <(gfind $(\dirname -- "$(\greadlink -f -- "$TO_BOOKMARK_DIR/${word}0" || \printf '/dev/null' )") -mindepth 1 -maxdepth 1 -type f -print0 2> /dev/null)
             subfiles=( "${subfiles[@]/#$pattern/$replace}" )
         fi
         compreply+=( "${subfiles[@]}" )
@@ -329,7 +329,7 @@ _to() {
         while \read -r -d '' bookmark
         do
             bookmarks+=($bookmark)
-        done < <(\find "$TO_BOOKMARK_DIR" -mindepth 1 -maxdepth 1 -type l -printf '%f/\0')
+        done < <(\gfind "$TO_BOOKMARK_DIR" -mindepth 1 -maxdepth 1 -type l -printf '%f/\0')
         compreply+=( "${bookmarks[@]}" )
     fi
 

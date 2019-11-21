@@ -1,15 +1,28 @@
 # to
 
-**to** - A simple script for bookmarking directory locations in POSIX-like systems with tab completion
+A simple script for bookmarking directory locations with tab completion.
 
+This fork only exists to support macOS 10.14+.
 
 ## Installation
 
 Shells currently supported are bash and zsh.  Other shells may be compatible, but they have not been tested.
 
-Source to.sh in your shell's initialization file.
+### Install dependencies - GNU tools
 
-This script supports several operating systems.  For more details see https://github.com/resultsreturned/to/wiki
+Install via [Homebrew](https://brew.sh/):
+
+```
+$ brew install coreutils findutils
+```
+
+### Add to `.profile`
+
+Source this script in your shell's initialization file, e.g. `.profile`:
+
+```bash
+source ~/path/to/to.sh
+```
 
 
 ## Usage
@@ -17,6 +30,7 @@ This script supports several operating systems.  For more details see https://gi
 to [OPTION] [BOOKMARK] [DEST]
 
 Options
+
 * __-b__ : Add a new bookmark for current directory (overwrites any current bookmark)
 * __-r__ : Remove bookmark
 * __-p__ : Print bookmark path
@@ -63,6 +77,7 @@ which contains symbolic links that represent your bookmarks. You can switch to t
 * bash or zsh
 
 The following functionality should either be provided or built in:
+
 * cd
 * ln
 * readlink
@@ -76,9 +91,9 @@ The following functionality should either be provided or built in:
 
 ## License
 
-to - v1.4.4
+to - v1.4.5
 
-Copyright (C) 2013  Mara Kim, Philipp Adolf, Max Thrun
+Copyright (C) 2013  Mara Kim, Philipp Adolf, Max Thrun, Rob Adams
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
